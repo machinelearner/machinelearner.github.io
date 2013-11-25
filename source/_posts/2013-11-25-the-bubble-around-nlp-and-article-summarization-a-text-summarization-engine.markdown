@@ -8,7 +8,10 @@ footer: true
 categories: [ NLP, Text Processing, Text Summarization ] 
 ---
 
-The development of the following piece was mainly during the same time as the acquisition of Summly by Yahoo!. The main intention in developing such a solution was to generate a stream summarization where a part of the article is edited by many users and as a article owner one would want to maintain a master version which would consist of the best of all the edits. The description of the thought-process while solving such a problem is the main content of this article.
+Hello Hive Mind,
+
+***The development of the following piece was mainly during the same time as the acquisition of Summly by Yahoo!. The main intention in developing such a solution was to generate a stream summarization where a part of the article is edited by many users and as a article owner one would want to maintain a master version which would consist of the best of all the edits. The description of the thought-process while solving such a problem is the main content of this article.***
+<!--more-->
 
 *Questions asked*
 

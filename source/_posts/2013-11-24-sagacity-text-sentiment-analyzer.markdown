@@ -10,8 +10,10 @@ categories:  [Mongo, Rails, Sentiment Analysis, Support Vector Machine]
 
 Hello Hive-Mind,
 
-This following is a piece of work which i tried out in my free time a while ago.
-The emphasis was on extracting sentiment from a piece of text, preferably a tweet(and all the twittery characters follow!!). I've have tried solving this as a text classification problem. The system is trained using nearly a million positively and negatively labelled tweets using the LibLinear version of SVM. I've tried to summarize the whole process in the following sections.
+***This following is a piece of work which i tried out in my free time a while ago.
+The emphasis was on extracting sentiment from a piece of text, preferably a tweet(and all the twittery characters follow!!). I've have tried solving this as a text classification problem. The system is trained using nearly a million positively and negatively labelled tweets using the LibLinear version of SVM. I've tried to summarize the whole process in the following sections.***
+
+<!--more-->
 
 **Support Vector Machine: An Introduction**
 ===========================================

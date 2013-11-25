@@ -11,6 +11,7 @@ Hello Hive Mind,
 
 
 ***Logs with diagnosis and system health monitoring data can be used to tune the system/process perform better. One of our clients, one of the largest manufacturers of computer hardware, approached us with an interesting problem with serious business concern. Dealing with increasing, precious log data was a problem that was knocking at their doorstep. The challenging bit for us was to design a system, which can handle the scale and also allow for building models, which can analyze the collected data.***
+<!--more-->
 
 The following is a journey of how we solved a distributed Log-Processing problem by integrating various systems built around the Hadoop Eco-System. The problem at hand was to build an efficient system, which could make querying of semi-structured data more easy. This meant that the system had to handle the ever-growing data in an efficient manner by ingesting, processing and storing data into a reliable and query-able eco-system.
 
