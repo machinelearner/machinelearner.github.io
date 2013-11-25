@@ -4,7 +4,7 @@
 
 url: http://machinelearner.github.io
 title: MachineLearner
-subtitle: Machine Learning and Distributed Systems Enthusiast
+subtitle: Machine Learning and Distributed Systems
 author: Pramod N
 simple_search: http://google.com/search
 description: Machine Learning and Distributed Systems Enthusiast. Believes in making world a more rational place. Computer Soldier. Football and Singing. Mythology
@@ -97,4 +97,10 @@ disqus_show_comment_count: true
 google_analytics_tracking_id:
 
 # Facebook Like
-facebook_like: false
+facebook_like: true
+
+navigation_elements: [
+  {name: "About Me", link: "/about"},
+  {name: "GitHub", link: "https://github.com/machinelearner"}]
+
+hide_design_credits: true
