@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Fladoozive - Distributed Log Processing System | Machinelearner Thoughts</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Hello Hive Mind,
+Logs with diagnosis and system health monitoring data can be used to tune the system/process perform better. One of our clients, one of the largest manufacturers of computer hardware,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fladoozive - Distributed Log Processing System">
+<meta property="og:url" content="localhost:4000/2013/11/25/fladoozive-distributed-log-processing-system/index.html">
+<meta property="og:site_name" content="Machinelearner Thoughts">
+<meta property="og:description" content="Hello Hive Mind,
+Logs with diagnosis and system health monitoring data can be used to tune the system/process perform better. One of our clients, one of the largest manufacturers of computer hardware,">
+<meta property="og:image" content="localhost:4000/2013/11/25/fladoozive-distributed-log-processing-system/analytical_application.jpg">
+<meta property="og:image" content="https://blogs.apache.org/flume/mediaresource/ab0d50f6-a960-42cc-971e-3da38ba3adad">
+<meta property="og:image" content="localhost:4000/2013/11/25/fladoozive-distributed-log-processing-system/fladoozive_arch.jpg">
+<meta property="og:updated_time" content="2016-08-17T22:09:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Fladoozive - Distributed Log Processing System">
+<meta name="twitter:description" content="Hello Hive Mind,
+Logs with diagnosis and system health monitoring data can be used to tune the system/process perform better. One of our clients, one of the largest manufacturers of computer hardware,">
+<meta name="twitter:image" content="localhost:4000/2013/11/25/fladoozive-distributed-log-processing-system/analytical_application.jpg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/fancybox/jquery.fancybox.css">
+    
+    
+    
+    
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                
+                <span class="site-title">Machinelearner Thoughts</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="https://www.gravatar.com/avatar/8578db6a9b326200fa29fc906564f040" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="https://www.gravatar.com/avatar/8578db6a9b326200fa29fc906564f040?s=128" />
+            <h2 id="name">Machinelearner</h2>
+            <h3 id="title">Data Specialist</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>London, UK</span>
+            <a id="follow" target="_blank" href="https://github.com/machinelearner/">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                3
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                13
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/machinelearner" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/machinelearner" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://linkedin.com/in/npramod" target="_blank" title="linkedin" class=tooltip>
+                            <i class="fa fa-linkedin"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-fladoozive-distributed-log-processing-system" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Fladoozive - Distributed Log Processing System
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2013/11/25/fladoozive-distributed-log-processing-system/">
+            <time datetime="2013-11-25T16:41:00.000Z" itemprop="datePublished">2013-11-25</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/tech/">tech</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/tech/distributed/">distributed</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/tech/distributed/application/">application</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Flume/">Flume</a>, <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/Hive/">Hive</a>, <a class="tag-link" href="/tags/Log-Processing/">Log Processing</a>, <a class="tag-link" href="/tags/Oozie/">Oozie</a>, <a class="tag-link" href="/tags/Sqoop/">Sqoop</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>Hello Hive Mind,</p>
+<p><strong><em>Logs with diagnosis and system health monitoring data can be used to tune the system/process perform better. One of our clients, one of the largest manufacturers of computer hardware, approached us with an interesting problem with serious business concern. Dealing with increasing, precious log data was a problem that was knocking at their doorstep. The challenging bit for us was to design a system, which can handle the scale and also allow for building models, which can analyze the collected data.</em></strong><br><a id="more"></a></p>
+<p>The following is a journey of how we solved a distributed Log-Processing problem by integrating various systems built around the Hadoop Eco-System. The problem at hand was to build an efficient system, which could make querying of semi-structured data more easy. This meant that the system had to handle the ever-growing data in an efficient manner by ingesting, processing and storing data into a reliable and query-able eco-system.</p>
+<p>Hadoop is a framework that allows for the distributed processing of large data sets across clusters of computers using simple programming models. It is designed to scale up from single servers to thousands of machines, each offering local computation and storage. Rather than relying on hardware to deliver high-availability, the framework itself is designed to detect and handle failures at the application layer and hence delivering a highly available service on top of a cluster of computers, each of which may be prone to failures.</p>
+<h1 id="Why-Hadoop"><a href="#Why-Hadoop" class="headerlink" title="Why Hadoop?"></a>Why Hadoop?</h1><p>This was one of the primary questions, which our client had, Why Hadoop? There were certain amount of constraints and the nature of data itself, which pushed us to choose Hadoop and its eco-system. </p>
+<p>Volume of data – It was primarily tens of thousands of devices, manufactured and deployed by our client, sending diagnostic reports on a periodic basis. It could be any where in the range of several tens or hundreds of GBs of data per day. Apart from the scale issue, the core problem was that the diagnostic logs had a variety of formats. Currently they had an ETL process that stages the data and uploads to their final store for analysis. With Hadoop, since the file system does not impose any restrictions on the format of data stored, it will be easy to on-board the data and perform ETL on top of it from within Hadoop. This would allow the ETL process to be parallelized through MapReduce and made more efficient. Also, the data was sensitive and not to be made available outside of client infrastructure (Ruled out a lot of proprietary and cloud based solutions, the likes of Splunk, Big Query etc.) The other requirement was the ability to build statistical or otherwise models, which derived useful insights from the data. It was also required that the current online applications consuming the data (either for reporting purpose, monitoring purpose or for other processing) should still be able to function with minor changes and without much effort.</p>
+<p>Summarizing all of it, it was required to build a system, which could collect data from various sources in real-time, pre-process to get it into a query-able format and in the end extract information to more traditional storage mechanisms like RDBMS for applications reporting the derived insights.</p>
+<p>This is where Hadoop felt right at home. Reliable storage of large scale data, query using HIVE, pre-processing either using Pig or custom map-reduce jobs, complex workflow management using Oozie or Cascading or Azkaban, data ingestion using Flume or Storm or Scribe and data migration using Sqoop. </p>
+<p><strong><em>It is important to understand the practices, workflows and usage patterns commonly seen in many enterprise systems while building a custom solution. The following is a summary of our understanding with BigData applications.</em></strong></p>
+<p>The data lifecycle describes how data moves through the application from ingestion to archival. One framework we have found useful for analyzing the way the application needs to be built is to look at each phase of the lifecycle, consider what are our requirements, trade-offs, technological considerations and choices.</p>
+<ul>
+<li><strong><em>Acquisition / Ingestion</em></strong> </li>
+</ul>
+<p>This stage in the application is responsible for handling the gushing stream of input data. The solution at this stage is responsible for controlling certain scale related parameters like:</p>
+<ul>
+<li>How fast or slow do we require data to move in?</li>
+<li>Is it to be streamed or can we move it as bulk uploads?</li>
+<li>What is the unit of processing? – Generally in a temporal scope – for e.g. daily, hourly etc.</li>
+</ul>
+<ul>
+<li><strong><em>Preparation</em></strong></li>
+</ul>
+<p>Conventional ETL (Extract, Transform, Load) phase. This is also the phase where we might want to consider how we will manage our schema. How we will manage changes to schema etc. Also decide what our requirements are for anonymizing data, how to handle missing values etc. The data that comes in from the acquisition stage is ‘raw’ data. After the preparatory stages, the data is generally ready for consumption by users of the application. However, we can look at storing the raw data in addition to processed data for archival purposes. We can control access to ‘raw’ data to administrators alone.</p>
+<ul>
+<li><strong><em>Processing</em></strong></li>
+</ul>
+<p>This is the phase where we run our descriptive or predictive statistical algorithms. This could also be where the data is opened up for ad-hoc or exploratory analysis.<br>Presentation: Given the high latency nature of processing, we would like to extract commonly used details for consumption by applications that have low latency requirements. This is usually related to meeting standard reporting requirements, etc. We need to decide what our integration requirements are and how to ensure the data is available for that consumption.</p>
+<ul>
+<li><strong><em>Archival</em></strong></li>
+</ul>
+<p>This generally is related to compressing and offloading data, for purposes of compliance. This is important to consider as it does drive requirements for capacity planning etc.</p>
+<p><strong><em>Having seen the common usage pattern, this section describes an example architecture, which points out the different set of systems and where they can fit in a BigData solution.</em></strong></p>
+<p>The first step in an analytical process is generally to move from sparse data sources to a co-existing analytical store. Access patterns in an analytical processing system are different from traditional systems. The data is analyzed as a whole set and involves bulk-processing, de-normalized forms etc. and hence analytical stores have special characteristics. Stores can be big data file systems like HDFS, NoSQL databases like HBase, or enterprise traditional data warehouses. This is where data ingestion systems come into picture, which handles the movement of data into analytical stores.  The Processing layer is split into two, processing and query. The processing layer performs data manipulation using some sort of ETL process or use of various statistical/machine-learning algorithms, which consume data to derive some insight. The query layer involves data arrangement and structuring so that it can be easily retrieved later. In general, this layer provides a SQL interface on top of the underlying data/analytical stores. The output of the processing layer could be put back to the stores for more efficient query in the presentation layer. The following figure shows the schematic of the various components in analytical big data solution and how they assemble together.</p>
+<img src="/2013/11/25/fladoozive-distributed-log-processing-system/analytical_application.jpg" alt="General BigData EcoSystem" title="General BigData EcoSystem">
+<p><strong><em>With the understanding of generic and commonly seen architecture, we present <strong>Fladoozive</strong> and its components.</em></strong></p>
+<p><strong>How did we get the data in?</strong></p>
+<p>One of the first problems we had to solve was to get the data into a place where we can use it for further processing. Having reasoned out to choose Hadoop’s HDFS as the analytical store, the idea was to use a component which can work in a reliable fashion but could also write to HDFS. We evaluated Scribe, a server for aggregating log data streamed in real time from a large number of servers, designed to be scalable, extensible without client-side modification, and robust to failure of the network or any specific machine. Facebook developed Scribe and they have used the same for all their log related problems. The problem we faced with Scribe was with the time consuming nature of debugging the scribe instance to write to HDFS. Without the official/community support and the less active development implies that maintaining a system built using this would have costly implication in the future if there is a need to upscale or there is a upgrade in other components. Other options available for large-scale distributed data ingestion component were Twitter Storm and Apache Flume (Couple of other proprietary and OSS implementation we haven’t discussed here). Storm is a distributed realtime computation system. Similar to how Hadoop provides a set of general primitives for doing batch processing, Storm provides a set of general primitives for doing realtime computation. The kind of data requirement we had in hand was not so inclined towards primitive realtime computation/data processing and would have seemed an overkill to use storm. The primary task of the ingest component was to provide a scalable mechanism to get data into HDFS. Apache Flume (Flume-NG is the new generation version of the original apache flume project and the we mean Flume-NG when we refer to flume) is a distributed, reliable, and available service for efficiently collecting, aggregating, and moving large amounts of log data. It has a simple and flexible architecture based on streaming data flows and provides many reliable, failover, recovery mechanism, which makes it robust and fault tolerant.</p>
+<img src="https://blogs.apache.org/flume/mediaresource/ab0d50f6-a960-42cc-971e-3da38ba3adad" title="[Flume Nodes ]">
+<p>Flume servers were configured to receive Avro (Data serialization mechanism) messages from different clients emitting logs. The Flume server provides certain handles, which can be used to tune the system for desired operational requirements. It has a concept of channel, which can be used as fast intermediate queues before writing to the sink. MemoryChannel provides high throughput but loses data in the event of a crash or loss of power. Relatively more persistent channel is a FileChannel. The goal of FileChannel is to provide a reliable high throughput channel. FileChannel guarantees that when a transaction is committed, no data will be lost due to a subsequent crash or loss of power. Channels have different configuration capabilities to control the velocity of flow and the latency needs before writing to HDFS or another set of flume servers (in general, sink). In a complex and massively high throughput environment the flume servers can be arranged in a layered architecture to add more reliability and throttling mechanism and hence control the data flow.  Flume can write to a set of sinks HDFS, AVRO, File, HBASE, ElasticSearch etc.  In our case the final Flume sink wrote to HDFS and was configured for various write characteristics like rollInterval, size, count etc.</p>
+<p><strong>What did we do with the data?</strong></p>
+<p><em>Data Organization and Processing</em></p>
+<p>Data life cycle involves storing data at three different stages in processing/analysis. The raw ingested data forms the initial stage in the lifecycle where it is primarily stored for further analysis. This stage may involve creation of suitable directory structure, which would help in making temporal decision either for computational purposes, compliance or monitoring purposes. The next stage is the processing/processed stage where the data after some processing is put in a directory structure, which is more suitable for the usage pattern. Incase the data is used to get timely reports/insights, and uses a Hadoop based querying solution then it’s a good idea to partition the data which will aid in modeling this better. The third stage is the archival stage where the data is stored in a compressed format for any further requirements, be it legal or verification etc.</p>
+<p>In the system we developed, the lowest level of directory had all the logs for a given day. The logs themselves did not have enough (rather any) meta data to suggest they should goto a certain directory. This is where Flume’s source interceptors came to rescue. TimeStamp interceptor was used to first tag the incoming log and use this tag information to create a directory on HDFS. This facility/feature was provided by Flume’s HDFS sink dynamic path, which had the ability to parse interceptor/header information. Flume ingested data formed the raw stage of the lifecycle. Processing stage involved running mapreduce Jobs to perform the data cleansing and preparation or in the BI world it’s equivalent to performing ETL (Extract Transform and Load) operations. The resultant data was written on to a processed section with a similar directory structure as the raw data. The important factor here was that the chosen directory structure aided in creating Hive partitions for querying which we will talk about in the next sub-section.</p>
+<p><strong>Now that there is data on HDFS, How do you make it query-able?</strong></p>
+<p>Hive is a data warehouse system for Hadoop that facilitates easy data summarization, ad-hoc queries, and the analysis of large datasets stored on HDFS or the kinds. It provides a SQL like querying mechanism called Hive Query Language (HQL), which in turn is converted to a set of map reduce jobs and run by Hive to fetch the results. Hive maintains Hive table meta information in an external database (can be configured to point to Mysql databse, and we used external MySql db as the metastore). The challenge was to make Hive point to the newly available data as and when they are available after processing. This was taken care by adding the processed directory, as a new Hive partition after the processing map-reduce job was complete. Hive partitions work in a similar fashion as that of a RDBMS partition. Hive partitions can point to directories on HDFS and the directory structure can act as column partition values. Adding a partition implies a new entry in the Hive metastore and thus the new data can be made available for querying in Hive. Hive provides a sql like interface which can be used to perform exploratory analysis and run queries.</p>
+<p><strong>Querying capability, check ✓ Now, How do I make this analyzed data available to my traditional reporting application accessing information from RDBMS?</strong></p>
+<p>Exporting data from HDFS to External RDBMS is a common problem faced by Analytical stores and solutions. We have used Sqoop, a tool designed for efficiently transferring bulk data between Apache Hadoop and structured datastores such as relational databases. Sqoop can work with Mysql out of the box using the JDBC driver to connect to it. It also has support to take in a custom driver and connect to other proprietary RDBMS e.g. Microsoft’s SQLServer. In Fladoozive, the output of a Hive query was written on to HDFS and Sqoop was used to pick up this result and populate a remote RDBMS table. In this way, a system, which reports insights on a timely manner can still work on the traditional RDBMS without having to move to a distributed paradigm as a set of operation can perform computation in batches on a distributed eco-system like Hadoop and dump the final output to RDBMS.</p>
+<p><strong>Talking about automation and integration of so many systems, How can I manage these workflows using just one tool/framework?</strong></p>
+<p>The typical process, which we emphasized in the previous sections, involves performing tasks in an orderly fashion, as a workflow. There are a bunch of options available to manage Hadoop related workflows e.g. Cascading, Oozie, Azkaban, Hamake etc. In our case the requirement was to be able to include actions from different components of Hadoop Ecosystem as part of one workflow. Cascading provides Java apis to schedule several kinds of jobs, Azkaban and Hamake have other ways to express a workflow but on the other hand support very few kinds of Hadoop related jobs. Given our requirement to integrate Mapreduce, Hive, Sqoop actions in a workflow, Oozie seemed a better fit as it supported most of these jobs out of the box. Oozie is a workflow scheduler system built to manage Hadoop Jobs. It is integrated with the rest of the Hadoop stack supporting several types of Hadoop jobs out of the box (such as Java map-reduce, Streaming map-reduce, Pig, Hive, Sqoop and Distcp) as well as system specific jobs (such as Java programs and shell scripts). Once Oozie is configured to work with Hive, Sqoop it can perform a task pertaining to these tools. Configuring Oozie to work with them at times simply involves making the java package jars available in the execution path on HDFS.  Oozie workflow can simplify the complexity involved in liking multiple Hadoop Map Reduce jobs and also can aid in the easy execution of other tools in the Hadoop Ecosystem which come as part of a particular data work flow.</p>
+<p>We had two sets of Oozie workflow:</p>
+<ol>
+<li>Pure ETL and processing, which would transform data into query-able format E.g. add Hive partition after some processing.</li>
+<li>Jobs of query and export nature.</li>
+</ol>
+<img src="/2013/11/25/fladoozive-distributed-log-processing-system/fladoozive_arch.jpg" alt="Fladoozive Architecture" title="Fladoozive Architecture">
+<p>Building the system gave us opportunity to understand better the distributed computing paradigm at an enterprise scale and what it takes to deal with the obstacles encountered along the way.</p>
+<h1 id="Conclusions"><a href="#Conclusions" class="headerlink" title="Conclusions"></a>Conclusions</h1><p>It was satisfying to see a system getting built over the course of a week and a half and just work. All of our choices were Open Source applications and for organizations looking for a custom solution due to privacy requirements or extensibility of use, at lower cost and wide community support, we would definitely recommend use of Hadoop Eco-System. There are certain areas in which the whole eco-system can improve. There are already signs that the community is doing everything there is to get to that stage.<br>There is a solution available for any specific problem, which one can think of. The ecosystem is evolving big and strong, there are already systems adopting newer features in Hadoop (YARN) and leveraging this to build more sophisticated systems which could work on the Hadoop stack. One of such discrete example is the evolution of SQL like solution that use HDFS. It is not long that Hadoop and its Eco-System becomes the De-Facto Standard for any analytical/Big Data solution.</p>
+<p><strong>Highlighting Important Lessons Learnt</strong></p>
+<p>Always check for version compatibility before proceeding: When integrating different components, always check if the versions of the components can co-exist. Tiny peril of using OSS components but on the contrary, public support forums come to the rescue in no time.</p>
+<p>Be prepared to get your hands dirty with the source code if necessary (which is rare) the component is in its very nascent stage and there is relatively less documentation around certain not fully evolved feature. </p>
+<p>[Originally Posted on Blogspot]</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="localhost:4000/2013/11/25/fladoozive-distributed-log-processing-system/" data-id="cirzgdb840001pzpfbeollmq7" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="localhost:4000/2013/11/25/fladoozive-distributed-log-processing-system/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="localhost:4000/2013/11/25/fladoozive-distributed-log-processing-system/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2013/11/25/the-bubble-around-nlp-and-article-summarization-a-text-summarization-engine/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">The Bubble around NLP and Article Summarization. A text summarization engine!!</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2013/11/25/fladoozive-distributed-log-processing-system/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/tech/">tech</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/tech/distributed/">distributed</a></p>
+                            <p class="item-title"><a href="/2013/11/25/fladoozive-distributed-log-processing-system/" class="title">Fladoozive - Distributed Log Processing System</a></p>
+                            <p class="item-date"><time datetime="2013-11-25T16:41:00.000Z" itemprop="datePublished">2013-11-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2013/11/25/the-bubble-around-nlp-and-article-summarization-a-text-summarization-engine/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/tech/">tech</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/tech/analysis/">analysis</a></p>
+                            <p class="item-title"><a href="/2013/11/25/the-bubble-around-nlp-and-article-summarization-a-text-summarization-engine/" class="title">The Bubble around NLP and Article Summarization. A text summarization engine!!</a></p>
+                            <p class="item-date"><time datetime="2013-11-25T05:01:21.000Z" itemprop="datePublished">2013-11-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2013/11/24/sagacity-text-sentiment-analyzer/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/tech/">tech</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/tech/analysis/">analysis</a></p>
+                            <p class="item-title"><a href="/2013/11/24/sagacity-text-sentiment-analyzer/" class="title">Sagacity - Text Sentiment Analyzer</a></p>
+                            <p class="item-date"><time datetime="2013-11-24T18:11:31.000Z" itemprop="datePublished">2013-11-24</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/tech/">tech</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tech/analysis/">analysis</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tech/analysis/text/">text</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/tech/distributed/">distributed</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tech/distributed/application/">application</a><span class="category-list-count">1</span></li></ul></li></ul></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a><span class="archive-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flume/">Flume</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hive/">Hive</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Log-Processing/">Log Processing</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mongo/">Mongo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oozie/">Oozie</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rails/">Rails</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentiment-Analysis/">Sentiment Analysis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sqoop/">Sqoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Support-Vector-Machine/">Support Vector Machine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Text-Processing/">Text Processing</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Text-Summarization/">Text Summarization</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Flume/" style="font-size: 10px;">Flume</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 10px;">Hive</a> <a href="/tags/Log-Processing/" style="font-size: 10px;">Log Processing</a> <a href="/tags/Mongo/" style="font-size: 10px;">Mongo</a> <a href="/tags/NLP/" style="font-size: 10px;">NLP</a> <a href="/tags/Oozie/" style="font-size: 10px;">Oozie</a> <a href="/tags/Rails/" style="font-size: 10px;">Rails</a> <a href="/tags/Sentiment-Analysis/" style="font-size: 10px;">Sentiment Analysis</a> <a href="/tags/Sqoop/" style="font-size: 10px;">Sqoop</a> <a href="/tags/Support-Vector-Machine/" style="font-size: 10px;">Support Vector Machine</a> <a href="/tags/Text-Processing/" style="font-size: 10px;">Text Processing</a> <a href="/tags/Text-Summarization/" style="font-size: 10px;">Text Summarization</a>
+        </div>
+    </div>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 machinelearner<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'localhost:4000/2013/11/25/fladoozive-distributed-log-processing-system/';
+        
+        this.page.identifier = 'fladoozive-distributed-log-processing-system';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'machinelearner-github' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+    
+        <script src="/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
