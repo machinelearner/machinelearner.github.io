@@ -3,23 +3,21 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Sagacity - Text Sentiment Analyzer | Machinelearner Thoughts</title>
+    <title>Authorization, an elephant in the room | Machinelearner Thoughts</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Hello Hive-Mind,
-This following is a piece of work which i tried out in my free time a while ago.The emphasis was on extracting sentiment from a piece of text, preferably a tweet(and all the twittery">
+    <meta name="description" content="Its been long. Had given up on the concept of blogs, an expression that is so informal and irresponsible at times, it was hard to fit that in my head. Perhaps another article on war and peace conversa">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Sagacity - Text Sentiment Analyzer">
-<meta property="og:url" content="machinelearner.in/2013/11/24/sagacity-text-sentiment-analyzer/index.html">
+<meta property="og:title" content="Authorization, an elephant in the room">
+<meta property="og:url" content="machinelearner.in/2016/08/18/Authorization-an-elephant-in-the-room/index.html">
 <meta property="og:site_name" content="Machinelearner Thoughts">
-<meta property="og:description" content="Hello Hive-Mind,
-This following is a piece of work which i tried out in my free time a while ago.The emphasis was on extracting sentiment from a piece of text, preferably a tweet(and all the twittery">
-<meta property="og:image" content="http://www.jvrb.org/past-issues/3.2006/760/svm1.jpg">
-<meta property="og:updated_time" content="2016-08-17T21:51:29.000Z">
+<meta property="og:description" content="Its been long. Had given up on the concept of blogs, an expression that is so informal and irresponsible at times, it was hard to fit that in my head. Perhaps another article on war and peace conversa">
+<meta property="og:image" content="machinelearner.in/2016/08/18/Authorization-an-elephant-in-the-room/nomenclature%20-%20authn%20and%20authz.jpg">
+<meta property="og:image" content="machinelearner.in/2016/08/18/Authorization-an-elephant-in-the-room/user_authn_authz.jpg">
+<meta property="og:updated_time" content="2016-08-23T10:32:39.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Sagacity - Text Sentiment Analyzer">
-<meta name="twitter:description" content="Hello Hive-Mind,
-This following is a piece of work which i tried out in my free time a while ago.The emphasis was on extracting sentiment from a piece of text, preferably a tweet(and all the twittery">
-<meta name="twitter:image" content="http://www.jvrb.org/past-issues/3.2006/760/svm1.jpg">
+<meta name="twitter:title" content="Authorization, an elephant in the room">
+<meta name="twitter:description" content="Its been long. Had given up on the concept of blogs, an expression that is so informal and irresponsible at times, it was hard to fit that in my head. Perhaps another article on war and peace conversa">
+<meta name="twitter:image" content="machinelearner.in/2016/08/18/Authorization-an-elephant-in-the-room/nomenclature%20-%20authn%20and%20authz.jpg">
     
 
     
@@ -196,7 +194,7 @@ This following is a piece of work which i tried out in my free time a while ago.
 </aside>
 
             
-            <section id="main"><article id="post-sagacity-text-sentiment-analyzer" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-Authorization-an-elephant-in-the-room" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -205,7 +203,7 @@ This following is a piece of work which i tried out in my free time a while ago.
                 
     
         <h1 class="article-title" itemprop="name">
-            Sagacity - Text Sentiment Analyzer
+            Authorization, an elephant in the room
         </h1>
     
 
@@ -214,24 +212,14 @@ This following is a piece of work which i tried out in my free time a while ago.
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2013/11/24/sagacity-text-sentiment-analyzer/">
-            <time datetime="2013-11-24T18:11:31.000Z" itemprop="datePublished">2013-11-24</time>
+        <a href="/2016/08/18/Authorization-an-elephant-in-the-room/">
+            <time datetime="2016-08-18T15:07:59.000Z" itemprop="datePublished">2016-08-18</time>
         </a>
     </div>
 
 
                         
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/tech/">tech</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/tech/analysis/">analysis</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/tech/analysis/text/">text</a>
-    </div>
-
                         
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/Mongo/">Mongo</a>, <a class="tag-link" href="/tags/Rails/">Rails</a>, <a class="tag-link" href="/tags/Sentiment-Analysis/">Sentiment Analysis</a>, <a class="tag-link" href="/tags/Support-Vector-Machine/">Support Vector Machine</a>
-    </div>
-
                     </div>
                 
             </header>
@@ -239,97 +227,34 @@ This following is a piece of work which i tried out in my free time a while ago.
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>Hello Hive-Mind,</p>
-<p><strong><em>This following is a piece of work which i tried out in my free time a while ago.<br>The emphasis was on extracting sentiment from a piece of text, preferably a tweet(and all the twittery characters follow!!). I’ve have tried solving this as a text classification problem. The system is trained using nearly a million positively and negatively labelled tweets using the LibLinear version of SVM. I’ve tried to summarize the whole process in the following sections.</em></strong></p>
-<a id="more"></a>
-<h1 id="Support-Vector-Machine-An-Introduction"><a href="#Support-Vector-Machine-An-Introduction" class="headerlink" title="Support Vector Machine: An Introduction"></a><strong>Support Vector Machine: An Introduction</strong></h1><p>Visual and detailed explanation with different examples can be found in this blog article and in this paper/article. But I’ve given it a try, explaining Basic working of SVM in this section.</p>
-<p>Basic SVM algorithm is an efficient binary classifier. The idea behind SVM approach to text classification is that the text(terms/grams in text) is mapped to a feature space in N dimension. This feature space is the basis for the SVM algorithm, which determines a linear decision surface (hyperplane) using the set of labeled data within it. This surface is then used to classify future instances of data. Data is classified based upon which side of the decision surfaces it falls. SVM is applicable to both linearly separable and non-linearly separable patterns. Patterns not linearly separable are transformed using kernel functions- a mapping function, into linearly separable ones. It can be formulated as follows,<br>The optimal hyperplane separating the two classes can be represented as:<br>        ω.X +β = 0     (1)</p>
-<p>where,</p>
-<p>X – sample input vectors defined as</p>
-<p>{(x1,y1),(x2,y2)…………(xk,yk)} xk ∈ Rn yi ∈ {1,-1}</p>
-<p>ω,β - non zero constants ω indicating the weight component and β indicating the bias component</p>
-<p>The ordered pair x,y is the representation of each input used to form hyperplane which are N dimensional vectors labeled with corresponding y.</p>
-<pre><code>ω.X +β ≥ 1 if yi =1     (2)
-ω.X +β ≤ -1 if yi=-1    (3)
-</code></pre><p>These can be combined into one set of inequalities:</p>
-<pre><code>yi(xi. ω + β) ≥ 1 ∀i      (4)
-</code></pre><p>The above inequalities hold for all input samples (linearly separable and suffice the optimal hyperplane equation). The optimal hyperplane is the unique one, which separates the training data with a maximal margin. The figure 1 depicts the above mathematical representation.<br><img src="http://www.jvrb.org/past-issues/3.2006/760/svm1.jpg" alt="multi class svm" title="SVM and Hyperplanes"></p>
-<pre><code>Figure 1: Classification in Linearly separable two class data
-</code></pre><p>In our experiments and the proposed system, LIBLINEAR - A Library for Large Linear Classification is used as the library providing the SVM algorithm.</p>
-<h1 id="Feature-Space"><a href="#Feature-Space" class="headerlink" title="Feature Space"></a><strong>Feature Space</strong></h1><p>There are various ways of handling text-processing problems in a vector space model. The system considers a bag of words, Unigram scenario where in every word in the corpus is represented as a dimension, which make up to the feature space. There are plenty of ways to weight such features:</p>
-<p><em>Presence</em>, where in the term is accounted for in a binary fashion depending on whether or not the word is present in the document or not.</p>
-<p><em>TFIDF</em> – Term Frequency &amp; Inverse document frequency, where in the belonging and importance of a particular word to a particular category is accounted. TFIDF is a numerical statistic, which reflects how important a word is to a document corpus</p>
-<pre><code>TFIDF = norm(TF) * IDF
-</code></pre><p>Where,</p>
-<p>TF = number of times a term occurred in the set</p>
-<p>IDF = log(|D|/||Dt|)</p>
-<p><em>Delta-TFIDF</em> - This measure works best for binary classification and especially well in a sentiment analysis scenario. This kind of term frequency transformation boosts the importance of words that are unevenly distributed between the positive and negative classes and discounts evenly distributed words. This better represents their true importance within the document for sentiment classiﬁcation. The value of an evenly distributed feature is zero. The more uneven the distribution the more important a feature should be. Features that are more prominent in the negative training set than the positive training set will have a positive score, and features that are more prominent in the positive training set than the negative training set will have a negative score. This makes a clean linear division between positive sentiment features and negative sentiment features(the reason why I have chosen to use this weighting mechanism).<br>Table 1 summarizes the top 10 words representing the positive and negative sentiment.</p>
-<pre><code>ΔTFIDF = TFIDF+ve – TFIDF-ve
-</code></pre><table>
-<thead>
-<tr>
-<th>Positive Sentiment Words</th>
-<th>Negative Sentiment Words </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>thanks</td>
-<td>sucks                    </td>
-</tr>
-<tr>
-<td>love</td>
-<td>want                     </td>
-</tr>
-<tr>
-<td>good</td>
-<td>sorry                    </td>
-</tr>
-<tr>
-<td>great</td>
-<td>sick                     </td>
-</tr>
-<tr>
-<td>happy</td>
-<td>hate                     </td>
-</tr>
-<tr>
-<td>you</td>
-<td>wish                     </td>
-</tr>
-<tr>
-<td>awesome</td>
-<td>bad                      </td>
-</tr>
-<tr>
-<td>haha</td>
-<td>work                     </td>
-</tr>
-<tr>
-<td>nice</td>
-<td>miss                     </td>
-</tr>
-<tr>
-<td>lol</td>
-<td>sad                      </td>
-</tr>
-<tr>
-<td>—————————————————-</td>
-</tr>
-</tbody>
-</table>
-<pre><code>Table 1: Top words occurring in positive and negative sentiments.
-</code></pre><p>The system can be divided into the following components:</p>
-<p><em>Pre-Processor</em></p>
-<p>This stage includes data cleaning processes required for text analysis. Cleansing is essential in any for of text analysis. The reason being the dimensionality factor. The more the number of unigrams/terms imply the dimensionality increase, which in turn result in complex computational needs and in the end a complex model. In order to avoid such a scenario, pre-processing techniques can help reduce the size of the feature space. There are other more sophisticated dimensionality reduction techniques, which can be employed, but eliminating few of the obvious things and improving unigram indicators is the easiest and the primary step. In this regard, the pre-processing comprises of removal of stop words, which are usually articles, pronouns, helping verbs etc., which are not indicative of any category. Spell-correction reduces the chances of same word being accounted twice in because they were spelt differently. This process also deals with accounting over expressiveness prior to correction. As part of pre-processing, the document/tweet is modeled into vectors and into a format such that the LibLinear classifier can easily consume these vectors.</p>
-<p><em>Training</em></p>
-<p>Training process consists of first generating the delta-tfidf dictionary which can then be used to weight vectors. The liblinear train involves choosing the right dataset and optimal training parameters for model generation. The system uses L1R_L2LOSS_SVC solver type(Tiny peek into what is L1R_L2LOSS_SVC). The output of the training process is a model, which represents the trained knowledge and is used for classification of new instances during the prediction phase.</p>
-<p><em>Classification</em> </p>
-<p>This is the stage where, given a sentence, transform it to a vector and predict against the model generated during the training stage.</p>
-<p>The code for all the above process can be found at Sagacity. Will try and make the app accessible to all of you. The tech stack included the following,<br>Ruby back end(training process)<br>Rails front end(very simple)<br>Ruby version of LibLinear for training and classification<br>Mongo</p>
-<p>Analysis indicated a cross-validated(10 fold) accuracy of 78.4667% and average accuracy of ~83% with similar F-Measure values across various datasets. Lot of scope for improvement. Hopefully I’ll be able to take it forward.</p>
-<p>This is the first of many article to come. Until Next Time, Live Long and Prosper!</p>
-<p>[Originally Posted on Blogspot]</p>
+            <p><strong>Its been long. Had given up on the concept of blogs, an expression that is so informal and irresponsible at times, it was hard to fit that in my head. Perhaps another article on <em>war and peace</em> conversation with <a href="https://twitter.com/a5hok" target="_blank" rel="external">@Ashok</a> and I’ve made peace with that conflict to say, some form of expression is better than none to begin with. As part of this article, will try and express things around authorization and the principles we used in one of the solutions we built a while ago(currently working on it to be made open-source, watchout for Ringfort). Also, a general narrative on where should it lie in the overall architecture, whether its a solved problem etc. Few of us <a href="https://www.thoughtworks.com" target="_blank" rel="external">@thoughtworks</a> were fortunate enough to build a collaboration and knowledge management platform, from scratch, for one of our clients. Authorization was one of the key ingredients of that journey. Hopefully, a lot of this narrative makes sense. Would be happy to be challenged otherwise.</strong></p>
+<p><em>Caveats: None of these diagrams are for AWS architecture interpretation. I like the stencil as its easy to express everything that is essential very well, using these icons.</em></p>
+<h4 id="The-confusion-nomenclature-Authentication-vs-Authorization"><a href="#The-confusion-nomenclature-Authentication-vs-Authorization" class="headerlink" title="The confusion, nomenclature - Authentication vs Authorization"></a>The confusion, nomenclature - Authentication vs Authorization</h4><p>The facilitation of knowing whether and if a user is valid is the simplistic definition of authentication(<strong>authn</strong>). Once authenticated, what that user can or cannot do is the concern addressed by authorization(<strong>authz</strong>). From a definition standpoint, things seem fairly simple. Authentication is typically a edge concern and authorization is a concern closed to domain. You’ve got to think about how does it work when there is a unified view presented in search(active and passive authz) and a unified domain around resource and the mechanics of that in an authz-ed setup. It starts getting grey when you look at the landscape of various toolsets and frameworks which help you do some of that. </p>
+<img src="/2016/08/18/Authorization-an-elephant-in-the-room/nomenclature%20-%20authn%20and%20authz.jpg" alt="Authn and Authz concerns" title="Authn and Authz concerns">
+<p><em>Note: Each box is a service which is self contained with its own data and evolution etc. Integration between these domain happen at the service/API vs storage. Although I don’t prefer using “Micro-Services” as a term(perhaps another post on that), yes in coloquial sense they are micro-services</em></p>
+<h5 id="Story-Part-1"><a href="#Story-Part-1" class="headerlink" title="Story - Part 1"></a>Story - Part 1</h5><h6 id="The-convenience-vs-control-battle"><a href="#The-convenience-vs-control-battle" class="headerlink" title="The convenience vs control battle"></a>The convenience vs control battle</h6><hr>
+<p>Dec-2013 when we were evolving this platform which I mentioned earlier and authn &amp; authz were the concerns that were being looked at closely, the immediate response in a huddle was “these are solved problems, lets not re-invent the wheel”. Thats only partially true. We will come back to that later. Starting with that hypothesis, there were a bunch of tools which were considered for evaluation. Apache Shiro, OpenAM etc. One of the things that was not explicitly called out was that authn and authz are different problems. Although solved/provided by one tool(most of the time), they are still different. But again, our journey with these tools continue. </p>
+<p>First tool we considered was Shiro. The internal community had seen a fair amount of success on a different back-office project for a retailer and we were building services on JVM, it was a reasonable consideration. One of the things which was evident immediately was the operational complexity of managing the service which was hosting authn. From an architectural stand point we called out a bunch of things:</p>
+<ul>
+<li>User and authn was clubbed together in a service. This was fine for password based login, but it would get complex for other forms of authn. </li>
+<li>Managing session, simply from an authn point of view, was going to become a problem on its own at scale. Although its a concern that needs to be handled, it was warranted at such an early stage in the evolution of the platform and there was no other need for session apart from managing user context.</li>
+<li>This was becoming a god service for all calls to pass through or call at. That wasn’t right for a fairly sizeable services setup which was there back then.</li>
+</ul>
+<h6 id="Introduce-Authz"><a href="#Introduce-Authz" class="headerlink" title="Introduce Authz"></a>Introduce Authz</h6><p>One of the glaring things about Shiro’s Authorization framework was the expression of “permissions” as strings and the query matching wildcard things on the “realm”. We were building a multi-tenanted platform which had to be flexible to accomodate a lot of changes and adopt to best software delivery practices. Chosing LDAP et.al was out of question. Firstly, they are not flexible to change, secondly they don’t scale very well in the sense that we would want it to in a multi-tenanted setup of hundreds of thousands of users potentially per tenant. It had to be something which would be a queryable “realm”, and here is where things become a bit complex. Managing this realm which is friendly to string based expression was going to become a problem either way. Also, changes to these permissions which are dynamic, would be hard to track without an immutable store. Its not that it couldn’t be done, but the value of control outweighed the convenience that was provided by the framework given we were not going to use majority of the best things in it.[1]<br>Back to square one, evaluation part 2. [OpenAM], with a lot of recommendations from a lot of good software people was an immediate hit. It had the promise of expressing different forms of authn but also had the promise of support a “robust” access control framework.</p>
+<h5 id="Principles"><a href="#Principles" class="headerlink" title="Principles"></a>Principles</h5><ul>
+<li>Control over convenience at scale(variety and volume)</li>
+<li>Domain and authorization over authentication and authorization</li>
+</ul>
+<h5 id="Story-Part-2"><a href="#Story-Part-2" class="headerlink" title="Story - Part 2"></a>Story - Part 2</h5><h6 id="The-convinience-vs-control-battle-continues-with-added-complexity"><a href="#The-convinience-vs-control-battle-continues-with-added-complexity" class="headerlink" title="The convinience vs control battle - continues, with added complexity"></a>The convinience vs control battle - continues, with added complexity</h6><hr>
+<p>This was q1-q2 of 2014 when the true colours of OpenAm started to emerge! From issues on thread safety to api stability, <a href="https://www.twitter.com/naughty_genius" target="_blank" rel="external">@naughty_genius</a> and <a href="https://twitter.com/vignesshv" target="_blank" rel="external">@vignesshv</a> probably never spent more time thinking about anything in their illustrious career than just getting authz in OpenAm to work.<br>From an authn point of view, OpenAM is probably one of the saner solutions out there which does the thing it claims to do very well. Infact, it eased some of the integration concerns which were there when it comes to multi-tenancy. <em>Recommended tool for authn concerns</em>. <strong>But</strong>, authz, we faced numerous issues. Some of the features were not fully ready back then. Especially around remote policy creation and query. XML expression added to the problem where at scale, ser-de for different queries was getting problematic. Some of the bizzare things which lead to frustrations included the fact that the documented API didn’t work as expected and we were for a small duration doing unacceptable things like, load a jsp and post data to it, use the cli instead(yes, you read that right, exec from a java process!! Nightmare!) etc just to get things working. From a modelling point of view, there were couple of things which were limiting in OpenAM. Modelling group of groups/sub-groups was one of such examples. From a performance standpoint, even when we patched and got the API bit working[2], there were issues on handling cuncurrent users(mere 50-100 concurrent users would almost kill OpenAM. That is unacceptable for a collab-esque platform). Although we did some form of RCA for all of that, the cost of fixing and cost of not having flexibility was something that was very glaring, especially given the business requirements which were lined up for further releases. </p>
+<h4 id="Architecture-and-critique"><a href="#Architecture-and-critique" class="headerlink" title="Architecture and critique!"></a>Architecture and critique!</h4><p>One of the things that was getting me uneasy was the passing of tokens all around the suite of services and that token resolution happening for a call in some domains and not in other domains etc. e.g. User domain hosted authz concern and the resolution was a concern that was imposed into that domain. Also, authn was also a concern that was owned by user as a domain, which was again another reason why token resolution and from a scale point of view it was becoming a bottleneck.<br>More generally, identity, typically encompasses source of truth for user attributes, authn and authz. From an architectural sense, they are different heterogenous concerns. User and atrributes are very business specific and should be considered a self evolving, business centric domain as opposed to a peripheral concern. Also, authn does need to rely on certain attributes, but they must be a consequence of the domain defining what these attributes must be. One of the glaring things for us was, trying to change schema for a tool which was handling authn to accomodate plenty of business attributes so that things were at one place. Our recommedation would be to keep them separate, as the attributes for authn concern is different(&amp; typically a sub-set) when compared to the domain of user. Also, there is a conception of attribute based authz(ABAC) which commonly gets played into the mix, (going to defer that to another post) while reasoning with attributes in authn solution etc. As a middleware for doing authn, its better if we let it do the thing that it does best and not bend it beyond breaking point. Which means, user as a domain exists which is disconnected from what the authn mechanism is. Authn mechanism would facilitate things like managing passwords securely, lifecycle of passwords, multi-factor nature of authn, delegation and other protocols involved. User as a domain on the other hand includes things which are relevant for a particular business problem. e.g. user having a reading preference and education details, food preference etc, are very specific to the business in consideration. Its best managed by a domain which handles what these business requirements are and not clubbed with a concern which is managing authn or authz. This also helps in evolution of sub-domain which are very close to a user e.g. expertise, profile recommendation, skills etc.</p>
+<img src="/2016/08/18/Authorization-an-elephant-in-the-room/user_authn_authz.jpg" alt="User, Authn and Authz" title="User, Authn and Authz">
+<p>Lastly, if its within the boundary of a business platform with multiple different domain services then its probably a good idea to look at authn, authz and user(Identity) domain as different concerns. Having said that, separating them for the sake of separation or pallelization doesn’t help as some of the services are very close to the evolution of other business domains e.g. social authoring(blog, posts etc) and the concerns around authz is not something that can be pre-empted but has to evolve with authz as a concern. The thing about authz is not the ease of use or expression, but its the ease of anwering the permission questions and why of permission especially when they are changing dynamically and have multiple change mechanisms.</p>
+<h4 id="Principles-1"><a href="#Principles-1" class="headerlink" title="Principles"></a>Principles</h4><ul>
+<li>Domain and authorization over authentication and authorization</li>
+<li>User as a domain over user managed by authentication</li>
+</ul>
+<h4 id="Business-requirements"><a href="#Business-requirements" class="headerlink" title="Business requirements"></a>Business requirements</h4><h4 id="Struggle-between-attribute-based-and-graph-approach"><a href="#Struggle-between-attribute-based-and-graph-approach" class="headerlink" title="Struggle between attribute based and graph approach"></a>Struggle between attribute based and graph approach</h4><h4 id="Why-not-graph"><a href="#Why-not-graph" class="headerlink" title="Why not graph?"></a>Why not graph?</h4><h4 id="Modelling-conceptual"><a href="#Modelling-conceptual" class="headerlink" title="Modelling - conceptual"></a>Modelling - conceptual</h4><h4 id="Software-design"><a href="#Software-design" class="headerlink" title="Software design"></a>Software design</h4><h4 id="Clients"><a href="#Clients" class="headerlink" title="Clients"></a>Clients</h4><h4 id="Nuances-journalling"><a href="#Nuances-journalling" class="headerlink" title="Nuances journalling"></a>Nuances journalling</h4><h4 id="Integration"><a href="#Integration" class="headerlink" title="Integration"></a>Integration</h4><h4 id="Architecture-again"><a href="#Architecture-again" class="headerlink" title="Architecture again"></a>Architecture again</h4><h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><h5 id="References"><a href="#References" class="headerlink" title="References"></a>References</h5><p>[1] Shiro: We integrated one of the domains and ran a bunch of tests to run into those conclusions. Was a longer(2-3) weeks spike/POC exercise is how I would read it now.<br>[2] My memory is getting flaky as to whether we patched it or compiled it differently. I remember a couple of conversations with the OpenAM team and then we got some bits of the API working.</p>
 
         
         </div>
@@ -340,7 +265,7 @@ This following is a piece of work which i tried out in my free time a while ago.
 
 </div>
 
-    <a data-url="machinelearner.in/2013/11/24/sagacity-text-sentiment-analyzer/" data-id="cis0dk7320000dk5ej7baqqi9" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="machinelearner.in/2016/08/18/Authorization-an-elephant-in-the-room/" data-id="cis0dweh1000sdz5e9nzn7uiv" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -408,7 +333,7 @@ This following is a piece of work which i tried out in my free time a while ago.
 
             
     
-        <a href="machinelearner.in/2013/11/24/sagacity-text-sentiment-analyzer/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="machinelearner.in/2013/11/24/sagacity-text-sentiment-analyzer/">Comments</a>
+        <a href="machinelearner.in/2016/08/18/Authorization-an-elephant-in-the-room/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="machinelearner.in/2016/08/18/Authorization-an-elephant-in-the-room/">Comments</a>
     
 
         </footer>
@@ -417,15 +342,11 @@ This following is a piece of work which i tried out in my free time a while ago.
         
 <nav id="article-nav">
     
-        <a href="/2013/11/25/the-bubble-around-nlp-and-article-summarization-a-text-summarization-engine/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">Newer</strong>
-            <div class="article-nav-title">
-                
-                    The Bubble around NLP and Article Summarization. A text summarization engine!!
-                
-            </div>
-        </a>
     
+        <a href="/2013/11/25/fladoozive-distributed-log-processing-system/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Fladoozive - Distributed Log Processing System</div>
+        </a>
     
 </nav>
 
@@ -589,9 +510,9 @@ This following is a piece of work which i tried out in my free time a while ago.
     <script>
     var disqus_config = function () {
         
-            this.page.url = 'machinelearner.in/2013/11/24/sagacity-text-sentiment-analyzer/';
+            this.page.url = 'machinelearner.in/2016/08/18/Authorization-an-elephant-in-the-room/';
         
-        this.page.identifier = 'sagacity-text-sentiment-analyzer';
+        this.page.identifier = 'Authorization-an-elephant-in-the-room';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
