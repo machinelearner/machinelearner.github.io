@@ -5,15 +5,15 @@
     
     <title>Machinelearner Thoughts</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Rants on Architecture, Distributed Systems, Machine Learning, Data applicationss">
+    <meta name="description" content="Rants on Architecture, Distributed Systems, Machine Learning, Data applications, Business models, Digital Economics, Software 2020, Value drive software delivery">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Machinelearner Thoughts">
 <meta property="og:url" content="machinelearner.in/index.html">
 <meta property="og:site_name" content="Machinelearner Thoughts">
-<meta property="og:description" content="Rants on Architecture, Distributed Systems, Machine Learning, Data applicationss">
+<meta property="og:description" content="Rants on Architecture, Distributed Systems, Machine Learning, Data applications, Business models, Digital Economics, Software 2020, Value drive software delivery">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Machinelearner Thoughts">
-<meta name="twitter:description" content="Rants on Architecture, Distributed Systems, Machine Learning, Data applicationss">
+<meta name="twitter:description" content="Rants on Architecture, Distributed Systems, Machine Learning, Data applications, Business models, Digital Economics, Software 2020, Value drive software delivery">
     
 
     
@@ -31,6 +31,17 @@
     
         <link rel="stylesheet" href="/vendor/fancybox/jquery.fancybox.css">
     
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-83092308-1', 'auto');
+ga('send', 'pageview');
+
+</script>
     
     
     
@@ -73,7 +84,7 @@
             <div id="search-form-wrap">
 
     <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Cari" />
         <button type="submit" class="search-form-submit"></button>
     </form>
     <div class="ins-search">
@@ -92,10 +103,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Posts',
+            POSTS: 'pos',
             PAGES: 'Pages',
-            CATEGORIES: 'Categories',
-            TAGS: 'Tags',
+            CATEGORIES: 'kategori',
+            TAGS: 'tag',
             UNTITLED: '(Untitled)',
         },
         ROOT_URL: '/',
@@ -126,7 +137,7 @@
                 <td>
                     
     <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Cari" />
     </div>
 
                 </td>
@@ -146,16 +157,16 @@
             <h2 id="name">Machinelearner</h2>
             <h3 id="title">Data Specialist</h3>
             <span id="location"><i class="fa fa-map-marker"></i>London, UK</span>
-            <a id="follow" target="_blank" href="https://github.com/machinelearner/">FOLLOW</a>
+            <a id="follow" target="_blank" href="https://github.com/machinelearner/">IKUTI</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
                 4
-                <span>posts</span>
+                <span>pos</span>
             </div>
             <div class="article-info-block">
                 13
-                <span>tags</span>
+                <span>tag</span>
             </div>
         </div>
         
@@ -228,10 +239,11 @@
 <p><em>Caveats: None of these diagrams are for AWS architecture interpretation. I like the stencil as its easy to express everything that is essential very well, using these icons.</em></p>
 <h4 id="The-confusion-nomenclature-Authentication-vs-Authorization"><a href="#The-confusion-nomenclature-Authentication-vs-Authorization" class="headerlink" title="The confusion, nomenclature - Authentication vs Authorization"></a>The confusion, nomenclature - Authentication vs Authorization</h4><p>The facilitation of knowing whether and if a user is valid is the simplistic definition of authentication(<strong>authn</strong>). Once authenticated, what that user can or cannot do is the concern addressed by authorization(<strong>authz</strong>). From a definition standpoint, things seem fairly simple. Authentication is typically a edge concern and authorization is a concern closed to domain. You’ve got to think about how does it work when there is a unified view presented in search(active and passive authz) and a unified domain around resource and the mechanics of that in an authz-ed setup. It starts getting grey when you look at the landscape of various toolsets and frameworks which help you do some of that. </p>
 <img src="/2016/08/18/Authorization-an-elephant-in-the-room/nomenclature%20-%20authn%20and%20authz.jpg" alt="Authn and Authz concerns" title="Authn and Authz concerns">
-<p><em>Note: Each box is a service which is self contained with its own data and evolution etc. Integration between these domain happen at the service/API vs storage. Although I don’t prefer using “Micro-Services” as a term(perhaps another post on that), yes in coloquial sense they are micro-services</em></p>
+<p><em>Note: Each box is a service which is self contained with its own data and evolution etc. Integration between these domain happen at the service/API vs storage. Although I don’t prefer using “Micro-Services” as a term(perhaps another post on that), yes, in coloquial sense they are micro-services</em></p>
 <h5 id="Story-Part-1"><a href="#Story-Part-1" class="headerlink" title="Story - Part 1"></a>Story - Part 1</h5><h6 id="The-convenience-vs-control-battle"><a href="#The-convenience-vs-control-battle" class="headerlink" title="The convenience vs control battle"></a>The convenience vs control battle</h6><hr>
 <p>Dec-2013 when we were evolving this platform which I mentioned earlier and authn &amp; authz were the concerns that were being looked at closely, the immediate response in a huddle was “these are solved problems, lets not re-invent the wheel”. Thats only partially true. We will come back to that later. Starting with that hypothesis, there were a bunch of tools which were considered for evaluation. Apache Shiro, OpenAM etc. One of the things that was not explicitly called out was that authn and authz are different problems. Although solved/provided by one tool(most of the time), they are still different. But again, our journey with these tools continue. </p>
-<p>First tool we considered was Shiro. The internal community had seen a fair amount of success on a different back-office project for a retailer and we were building services on JVM, it was a reasonable consideration. One of the things which was evident immediately was the operational complexity of managing the service which was hosting authn. From an architectural stand point we called out a bunch of things:</p>
+<p>First tool we considered was Shiro. The internal community had seen a fair amount of success on a different back-office project for a retailer and we were building services on JVM, it was a reasonable consideration. One of the things which was evident immediately was the operational complexity of managing the service which was hosting authn.</p>
+<h5 id="Architecture-and-critique"><a href="#Architecture-and-critique" class="headerlink" title="Architecture and critique!"></a>Architecture and critique!</h5><p>From an architectural stand point we called out a bunch of things:</p>
 <ul>
 <li>User and authn was clubbed together in a service. This was fine for password based login, but it would get complex for other forms of authn. </li>
 <li>Managing session, simply from an authn point of view, was going to become a problem on its own at scale. Although its a concern that needs to be handled, it was warranted at such an early stage in the evolution of the platform and there was no other need for session apart from managing user context.</li>
@@ -244,14 +256,20 @@
 </ul>
 <h5 id="Story-Part-2"><a href="#Story-Part-2" class="headerlink" title="Story - Part 2"></a>Story - Part 2</h5><h6 id="The-convinience-vs-control-battle-continues-with-added-complexity"><a href="#The-convinience-vs-control-battle-continues-with-added-complexity" class="headerlink" title="The convinience vs control battle - continues, with added complexity"></a>The convinience vs control battle - continues, with added complexity</h6><hr>
 <p>This was q1-q2 of 2014 when the true colours of OpenAm started to emerge! From issues on thread safety to api stability, <a href="https://www.twitter.com/naughty_genius" target="_blank" rel="external">@naughty_genius</a> and <a href="https://twitter.com/vignesshv" target="_blank" rel="external">@vignesshv</a> probably never spent more time thinking about anything in their illustrious career than just getting authz in OpenAm to work.<br>From an authn point of view, OpenAM is probably one of the saner solutions out there which does the thing it claims to do very well. Infact, it eased some of the integration concerns which were there when it comes to multi-tenancy. <em>Recommended tool for authn concerns</em>. <strong>But</strong>, authz, we faced numerous issues. Some of the features were not fully ready back then. Especially around remote policy creation and query. XML expression added to the problem where at scale, ser-de for different queries was getting problematic. Some of the bizzare things which lead to frustrations included the fact that the documented API didn’t work as expected and we were for a small duration doing unacceptable things like, load a jsp and post data to it, use the cli instead(yes, you read that right, exec from a java process!! Nightmare!) etc just to get things working. From a modelling point of view, there were couple of things which were limiting in OpenAM. Modelling group of groups/sub-groups was one of such examples. From a performance standpoint, even when we patched and got the API bit working[2], there were issues on handling cuncurrent users(mere 50-100 concurrent users would almost kill OpenAM. That is unacceptable for a collab-esque platform). Although we did some form of RCA for all of that, the cost of fixing and cost of not having flexibility was something that was very glaring, especially given the business requirements which were lined up for further releases. </p>
-<h4 id="Architecture-and-critique"><a href="#Architecture-and-critique" class="headerlink" title="Architecture and critique!"></a>Architecture and critique!</h4><p>One of the things that was getting me uneasy was the passing of tokens all around the suite of services and that token resolution happening for a call in some domains and not in other domains etc. e.g. User domain hosted authz concern and the resolution was a concern that was imposed into that domain. Also, authn was also a concern that was owned by user as a domain, which was again another reason why token resolution and from a scale point of view it was becoming a bottleneck.<br>More generally, identity, typically encompasses source of truth for user attributes, authn and authz. From an architectural sense, they are different heterogenous concerns. User and atrributes are very business specific and should be considered a self evolving, business centric domain as opposed to a peripheral concern. Also, authn does need to rely on certain attributes, but they must be a consequence of the domain defining what these attributes must be. One of the glaring things for us was, trying to change schema for a tool which was handling authn to accomodate plenty of business attributes so that things were at one place. Our recommedation would be to keep them separate, as the attributes for authn concern is different(&amp; typically a sub-set) when compared to the domain of user. Also, there is a conception of attribute based authz(ABAC) which commonly gets played into the mix, (going to defer that to another post) while reasoning with attributes in authn solution etc. As a middleware for doing authn, its better if we let it do the thing that it does best and not bend it beyond breaking point. Which means, user as a domain exists which is disconnected from what the authn mechanism is. Authn mechanism would facilitate things like managing passwords securely, lifecycle of passwords, multi-factor nature of authn, delegation and other protocols involved. User as a domain on the other hand includes things which are relevant for a particular business problem. e.g. user having a reading preference and education details, food preference etc, are very specific to the business in consideration. Its best managed by a domain which handles what these business requirements are and not clubbed with a concern which is managing authn or authz. This also helps in evolution of sub-domain which are very close to a user e.g. expertise, profile recommendation, skills etc.</p>
+<h5 id="Architecture-and-critique-1"><a href="#Architecture-and-critique-1" class="headerlink" title="Architecture and critique!"></a>Architecture and critique!</h5><p>One of the things that was getting me uneasy was the passing of tokens all around the suite of services and that token resolution happening for a call in some domains and not in other domains etc. e.g. User domain hosted authz concern and the resolution was a concern that was imposed into that domain. Also, authn was also a concern that was owned by user as a domain, which was again another reason why token resolution and from a scale point of view it was becoming a bottleneck.<br>More generally, identity, typically encompasses source of truth for user attributes, authn and authz. From an architectural sense, they are different heterogenous concerns. User and atrributes are very business specific and should be considered a self evolving, business centric domain as opposed to a peripheral concern. Also, authn does need to rely on certain attributes, but they must be a consequence of the domain defining what these attributes must be. One of the glaring things for us was, trying to change schema for a tool which was handling authn to accomodate plenty of business attributes so that things were at one place. Our recommedation would be to keep them separate, as the attributes for authn concern is different(&amp; typically a sub-set) when compared to the domain of user. Also, there is a conception of attribute based authz(ABAC) which commonly gets played into the mix, (going to defer that to another post, <em>ABAC- a false sense of ease, flexibility and security</em>) while reasoning with attributes in authn solution etc. As a middleware for doing authn, its better if we let it do the thing that it does best and not bend it beyond breaking point. Which means, user as a domain exists which is disconnected from what the authn mechanism is. Authn mechanism would facilitate things like managing passwords securely, lifecycle of passwords, multi-factor nature of authn, delegation and other protocols involved. User as a domain on the other hand includes things which are relevant for a particular business problem. e.g. user having a reading preference and education details, food preference etc, are very specific to the business in consideration. Its best managed by a domain which handles what these business requirements are and not clubbed with a concern which is managing authn or authz. This also helps in evolution of sub-domain which are very close to a user e.g. expertise, profile recommendation, skills etc.</p>
 <img src="/2016/08/18/Authorization-an-elephant-in-the-room/user_authn_authz.jpg" alt="User, Authn and Authz" title="User, Authn and Authz">
 <p>Lastly, if its within the boundary of a business platform with multiple different domain services then its probably a good idea to look at authn, authz and user(Identity) domain as different concerns. Having said that, separating them for the sake of separation or pallelization doesn’t help as some of the services are very close to the evolution of other business domains e.g. social authoring(blog, posts etc) and the concerns around authz is not something that can be pre-empted but has to evolve with authz as a concern. The thing about authz is not the ease of use or expression, but its the ease of anwering the permission questions and why of permission especially when they are changing dynamically and have multiple change mechanisms.</p>
 <h4 id="Principles-1"><a href="#Principles-1" class="headerlink" title="Principles"></a>Principles</h4><ul>
 <li>Domain and authorization over authentication and authorization</li>
 <li>User as a domain over user managed by authentication</li>
 </ul>
-<h4 id="Business-requirements"><a href="#Business-requirements" class="headerlink" title="Business requirements"></a>Business requirements</h4><h4 id="Struggle-between-attribute-based-and-graph-approach"><a href="#Struggle-between-attribute-based-and-graph-approach" class="headerlink" title="Struggle between attribute based and graph approach"></a>Struggle between attribute based and graph approach</h4><h4 id="Why-not-graph"><a href="#Why-not-graph" class="headerlink" title="Why not graph?"></a>Why not graph?</h4><h4 id="Modelling-conceptual"><a href="#Modelling-conceptual" class="headerlink" title="Modelling - conceptual"></a>Modelling - conceptual</h4><h4 id="Software-design"><a href="#Software-design" class="headerlink" title="Software design"></a>Software design</h4><h4 id="Clients"><a href="#Clients" class="headerlink" title="Clients"></a>Clients</h4><h4 id="Nuances-journalling"><a href="#Nuances-journalling" class="headerlink" title="Nuances journalling"></a>Nuances journalling</h4><h4 id="Integration"><a href="#Integration" class="headerlink" title="Integration"></a>Integration</h4><h4 id="Architecture-again"><a href="#Architecture-again" class="headerlink" title="Architecture again"></a>Architecture again</h4><h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><h5 id="References"><a href="#References" class="headerlink" title="References"></a>References</h5><p>[1] Shiro: We integrated one of the domains and ran a bunch of tests to run into those conclusions. Was a longer(2-3) weeks spike/POC exercise is how I would read it now.<br>[2] My memory is getting flaky as to whether we patched it or compiled it differently. I remember a couple of conversations with the OpenAM team and then we got some bits of the API working.</p>
+<h4 id="Business-requirements"><a href="#Business-requirements" class="headerlink" title="Business requirements"></a>Business requirements</h4><h5 id="Story-Part-3"><a href="#Story-Part-3" class="headerlink" title="Story - Part 3"></a>Story - Part 3</h5><h6 id="The-convinience-vs-control-battle-continues-in-a-different-shape-build-vs-buy"><a href="#The-convinience-vs-control-battle-continues-in-a-different-shape-build-vs-buy" class="headerlink" title="The convinience vs control battle - continues, in a different shape; build vs buy"></a>The convinience vs control battle - continues, in a different shape; build vs buy</h6><hr>
+<p>With all the “advancements” happening around the painful situation with authz, business was looking to do plenty more which would effect authz. This included functionality around sharing resources with a community, implied access due to a heirarchy which was in play because of many reasons, notion of trail of permission changes who, why, how and when etc. Even with OpenAM working without any problems, modelling these things would have a. Not been performant and b. not been very resonable(why did one get this permission, how and when) from a business standpoint.<br>Another beast which was in play was “authorised search”. Fairly involved full text search capablity with filter, facet etc which had to emit results iff one was allowed access to it. This is where a bit of nuance comes into play, active and passive authz for search. In the active case, user does not see results if they are not supposed to see, hence, actively showing authorized results only. In the passive case, the enforcement of authz is not at a search result level but on explicit access. The latter model simplifies things from an authz point of view where search and results are un-aware of any restrictions and on access(which can easily be made a domain concern) applies authz lazily. This works in certain class of problems e.g. a course comes up in search result but can only be accessed if you’ve registered for it(learning management domain). But, is detrimental in certain cases e.g: personal documents, sensitive documents of people etc in a enterprise collaboration setup doesn’t fit very well to the passive approach. Most of the usecases in our platform was falling under the usecase of actively doing authz.<br>With all of these in play, we were at a point where we were trying to make a decision as to whether we should use a tool which does authz(like Shiro, OpenAM but not them), perhaps a paid one?, or should that be build ground up. In our situation, the decision was fairly simple, build it because we didn’t want to get into this <a href="http://sethgodin.typepad.com/seths_blog/2005/03/dont_shave_that.html" target="_blank" rel="external">yak shaving</a> in another two months if we found problems in that other solution. But if we were not in this situation, we probably would’ve moved differently. My recommendation would be to assess whats the convinience the tool under consideration is bringing in and what is the long term value of that convinience. </p>
+<img src="/2016/08/18/Authorization-an-elephant-in-the-room/reinvent_right_wheel.jpg" alt="Re-Invent the right kind of wheel" title="Re-Invent the right kind of wheel">
+<p><em>Source: <a href="http://www.burkard.it/comic-strips/" target="_blank" rel="external">http://www.burkard.it/comic-strips/</a></em></p>
+<p>If there is less value in that, then its probably not a bad idea to re-invent that wheel the right way(circular one perhaps!)</p>
+<h5 id="Architecture-and-critique-2"><a href="#Architecture-and-critique-2" class="headerlink" title="Architecture and critique!"></a>Architecture and critique!</h5><p>Active authz brings about a bunch of challenges, especially when the physical storage mechanism is different for source of truth and search, there is an inherent challenge as to apply authz across these mechanisms. Textual query concern, search spanning across multiple domain(unified search) with a homogenous quality of response are some of the reasoning behind making search in itself a separate concern, a service. There is again a battle between managing concerns well. In a typical federated model where search and authz is handled by each domain as a first class concern, which we saw in the early phases of the project(q4-2013), there is a concern of heterogeneity creeping into reasoning with permissions. Also, some of the implementations can get extremely shallow where its harder to reason with it beyond code, coceptually. That was a good enough reason for us to centralise interpretation of authz but the control of definition, change and check/query was with the domains. Very similar model was applied to search and hence the centralization. Also, from a product-suite point of view, managing search(ant authz) as a separate concern helps managing infrastructure and capacity plan better. More on this particular topic in another post - <em>Federation vs centralization and battle of biggies</em>.<br>From an architectural standpoint, the ability for domain to express what permissions meant for them was essential but at the same time handling concerns around scale, search etc was something that had to be diligently managed. One of the ways of managing this search concern was to have something in search on which things could be filtered on. It had to be conceptually representative of the authz domain but at the same time play well with the search(<a href="http://elacticsearch.org" target="_blank" rel="external">Elasticsearch</a> in our case) nuances[3]. One of the things the search solution had to be aware of was the fact that there existed an additional filter that it needs to apply(“must” filter) and the values for this filter needs to come from authz solution.<br><em>Conceptually what does it mean?</em><br>For every query with a user context, there had to be minimal information about the user that had to be queried from authz which can then be matched against all the resources in the “types” and filtered to get authorized results. This essentially has two things, 1) during writes, for every resources, some level of <em>access control list(ACL)</em> atleast for read needs to be part of search 2) during query, the querying user should be representated suitable with all their representations so that they can see the result by virtue of atleast one of their representation[4], more generally, <em>subject representations</em>.<br><img src="/2016/08/18/Authorization-an-elephant-in-the-room/search_authn_authz.jpg" alt="User, Search, Authn and Authz" title="User, Search, Authn and Authz"><br>Having said that, this sets a bunch of expectations from authz solutions to answer ACL question and Subject Representation questions. One of the things, during performance evaluation, which we observed was that OpenAM was not so good at answering the subject representation question if there were too many groups that a user belonged to. This will become more clear once I present the solution.</p>
+<h3 id="The-solution"><a href="#The-solution" class="headerlink" title="The solution"></a>The solution</h3><h4 id="Why-not-graph"><a href="#Why-not-graph" class="headerlink" title="Why not graph?"></a>Why not graph?</h4><h4 id="Modelling-conceptual"><a href="#Modelling-conceptual" class="headerlink" title="Modelling - conceptual"></a>Modelling - conceptual</h4><h4 id="Software-design"><a href="#Software-design" class="headerlink" title="Software design"></a>Software design</h4><h4 id="Clients"><a href="#Clients" class="headerlink" title="Clients"></a>Clients</h4><h4 id="Nuances-journalling"><a href="#Nuances-journalling" class="headerlink" title="Nuances journalling"></a>Nuances journalling</h4><h4 id="Integration"><a href="#Integration" class="headerlink" title="Integration"></a>Integration</h4><h4 id="Architecture-again"><a href="#Architecture-again" class="headerlink" title="Architecture again"></a>Architecture again</h4><h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><h5 id="Appendix-or-Naive-Wisdom"><a href="#Appendix-or-Naive-Wisdom" class="headerlink" title="Appendix or Naive Wisdom"></a>Appendix or Naive Wisdom</h5><p>[1] Shiro: We integrated one of the domains and ran a bunch of tests to run into those conclusions. Was a longer(2-3) weeks spike/POC exercise is how I would read it now.<br>[2] My memory is getting flaky as to whether we patched it or compiled it differently. I remember a couple of conversations with the OpenAM team and then we got some bits of the API working.<br>[3] Being one of the early adopters of Elasticsearch within thoughtworks, it eased a lot of the scale and modelling concerns. Also certain features allowed for incrementally evolving search as a functionality. <a href="https://twitter.com/vatsakatta" target="_blank" rel="external">@skatta</a> has written about some of the work that he did in 2012 <a href="http://www.srivatsakatta.com/2012/12/elastic-search-plugin-to-add-custom.html" target="_blank" rel="external">here</a> and a lot of the learnings from there carried over to this product-suite team<br>[4] Database people reading this would be banging their head as to why am I describing JOIN in such terms. Another thing about being in a micro-service setup is that you delay join to a layer beyond database and hence careful evaluations must be put in to see the effects of join. In our case, the challenge for us was to keep the smaller half of the result set in the query so that the join is cheaper and can effectively be managed without fetching results from the store. More on this in another post - <em>Microservice, understand data mechanics before venturing in</em></p>
 
         
         </div>
@@ -262,7 +280,7 @@
 
 </div>
 
-    <a data-url="machinelearner.in/2016/08/18/Authorization-an-elephant-in-the-room/" data-id="cis0dweh1000sdz5e9nzn7uiv" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="machinelearner.in/2016/08/18/Authorization-an-elephant-in-the-room/" data-id="cis0dweh1000sdz5e9nzn7uiv" class="article-share-link"><i class="fa fa-share"></i>Bagikan</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -330,7 +348,7 @@
 
             
     
-        <a href="machinelearner.in/2016/08/18/Authorization-an-elephant-in-the-room/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="machinelearner.in/2016/08/18/Authorization-an-elephant-in-the-room/">Comments</a>
+        <a href="machinelearner.in/2016/08/18/Authorization-an-elephant-in-the-room/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="machinelearner.in/2016/08/18/Authorization-an-elephant-in-the-room/">Komentar</a>
     
 
         </footer>
@@ -396,7 +414,7 @@
 
 </div>
 
-    <a data-url="machinelearner.in/2013/11/25/fladoozive-distributed-log-processing-system/" data-id="cis0dk740000gdk5e2gavkgq9" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="machinelearner.in/2013/11/25/fladoozive-distributed-log-processing-system/" data-id="cis0dk740000gdk5e2gavkgq9" class="article-share-link"><i class="fa fa-share"></i>Bagikan</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -464,7 +482,7 @@
 
             
     
-        <a href="machinelearner.in/2013/11/25/fladoozive-distributed-log-processing-system/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="machinelearner.in/2013/11/25/fladoozive-distributed-log-processing-system/">Comments</a>
+        <a href="machinelearner.in/2013/11/25/fladoozive-distributed-log-processing-system/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="machinelearner.in/2013/11/25/fladoozive-distributed-log-processing-system/">Komentar</a>
     
 
         </footer>
@@ -530,7 +548,7 @@
 
 </div>
 
-    <a data-url="machinelearner.in/2013/11/25/the-bubble-around-nlp-and-article-summarization-a-text-summarization-engine/" data-id="cis0dk742000idk5e6uf69tus" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="machinelearner.in/2013/11/25/the-bubble-around-nlp-and-article-summarization-a-text-summarization-engine/" data-id="cis0dk742000idk5e6uf69tus" class="article-share-link"><i class="fa fa-share"></i>Bagikan</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -598,7 +616,7 @@
 
             
     
-        <a href="machinelearner.in/2013/11/25/the-bubble-around-nlp-and-article-summarization-a-text-summarization-engine/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="machinelearner.in/2013/11/25/the-bubble-around-nlp-and-article-summarization-a-text-summarization-engine/">Comments</a>
+        <a href="machinelearner.in/2013/11/25/the-bubble-around-nlp-and-article-summarization-a-text-summarization-engine/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="machinelearner.in/2013/11/25/the-bubble-around-nlp-and-article-summarization-a-text-summarization-engine/">Komentar</a>
     
 
         </footer>
@@ -664,7 +682,7 @@
 
 </div>
 
-    <a data-url="machinelearner.in/2013/11/24/sagacity-text-sentiment-analyzer/" data-id="cis0dk7320000dk5ej7baqqi9" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="machinelearner.in/2013/11/24/sagacity-text-sentiment-analyzer/" data-id="cis0dk7320000dk5ej7baqqi9" class="article-share-link"><i class="fa fa-share"></i>Bagikan</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -732,7 +750,7 @@
 
             
     
-        <a href="machinelearner.in/2013/11/24/sagacity-text-sentiment-analyzer/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="machinelearner.in/2013/11/24/sagacity-text-sentiment-analyzer/">Comments</a>
+        <a href="machinelearner.in/2013/11/24/sagacity-text-sentiment-analyzer/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="machinelearner.in/2013/11/24/sagacity-text-sentiment-analyzer/">Komentar</a>
     
 
         </footer>
@@ -747,7 +765,7 @@
    
         
     <div class="widget-wrap">
-        <h3 class="widget-title">recent</h3>
+        <h3 class="widget-title">terbaru</h3>
         <div class="widget">
             <ul id="recent-post" class="">
                 
@@ -834,7 +852,7 @@
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">categories</h3>
+        <h3 class="widget-title">kategori</h3>
         <div class="widget">
             <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/tech/">tech</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tech/analysis/">analysis</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tech/analysis/text/">text</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/tech/distributed/">distributed</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tech/distributed/application/">application</a><span class="category-list-count">1</span></li></ul></li></ul></li></ul>
         </div>
@@ -843,7 +861,7 @@
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">archives</h3>
+        <h3 class="widget-title">arsip</h3>
         <div class="widget">
             <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a><span class="archive-list-count">3</span></li></ul>
         </div>
@@ -852,7 +870,7 @@
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">tags</h3>
+        <h3 class="widget-title">tag</h3>
         <div class="widget">
             <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flume/">Flume</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hive/">Hive</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Log-Processing/">Log Processing</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mongo/">Mongo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Oozie/">Oozie</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rails/">Rails</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sentiment-Analysis/">Sentiment Analysis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sqoop/">Sqoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Support-Vector-Machine/">Support Vector Machine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Text-Processing/">Text Processing</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Text-Summarization/">Text Summarization</a><span class="tag-list-count">1</span></li></ul>
         </div>
@@ -861,7 +879,7 @@
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">tag cloud</h3>
+        <h3 class="widget-title">awan tag</h3>
         <div class="widget tagcloud">
             <a href="/tags/Flume/" style="font-size: 10px;">Flume</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hive/" style="font-size: 10px;">Hive</a> <a href="/tags/Log-Processing/" style="font-size: 10px;">Log Processing</a> <a href="/tags/Mongo/" style="font-size: 10px;">Mongo</a> <a href="/tags/NLP/" style="font-size: 10px;">NLP</a> <a href="/tags/Oozie/" style="font-size: 10px;">Oozie</a> <a href="/tags/Rails/" style="font-size: 10px;">Rails</a> <a href="/tags/Sentiment-Analysis/" style="font-size: 10px;">Sentiment Analysis</a> <a href="/tags/Sqoop/" style="font-size: 10px;">Sqoop</a> <a href="/tags/Support-Vector-Machine/" style="font-size: 10px;">Support Vector Machine</a> <a href="/tags/Text-Processing/" style="font-size: 10px;">Text Processing</a> <a href="/tags/Text-Summarization/" style="font-size: 10px;">Text Summarization</a>
         </div>
@@ -889,7 +907,7 @@
     };
     (function() { 
         var d = document, s = d.createElement('script');  
-        s.src = '//' + 'machinelearner-github' + '.disqus.com/count.js';
+        s.src = '//' + 'machinelearner-thoughts' + '.disqus.com/count.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
